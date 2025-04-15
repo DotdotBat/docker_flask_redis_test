@@ -1,0 +1,19 @@
+services:
+  flask:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    working_dir: /app  # Corrected from workingdir
+    volumes:
+      - ./:/app  # Corrected from ./:./app
+    environment:
+      FLASK_ENV: development  
+    depends_on:
+      - redis  
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"

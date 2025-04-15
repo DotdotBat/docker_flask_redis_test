@@ -1,26 +1,59 @@
-Part one:
+# Flask Docker Application with Redis Integration
 
-The task was to create an app in flask and run package it with docker so that cunning a curl request to the /ping endpoint will return a `{'status':'ok'}` response
+A Flask application Dockerized and integrated with Redis for caching. The application provides endpoints to check status and count visits.
 
-build with
+## Part 1: Flask Application in Docker
+
+### Build the Docker Image
 ```bash
-docker build -t 'flasker'
+docker build -t flasker .
 ```
 
-run with
+### Run the Container
 ```bash
-docker run -it -p 5000:5000 'flasker'
+docker run -it -p 5000:5000 flasker
 ```
 
-test with 
+### Test the `/ping` Endpoint
 ```bash
 curl http://localhost:5000/ping
 ```
-output:
-```bash
+
+**Expected Output**:
+```json
 {
   "status": "ok"
 }
 ```
 
-Part two:
+### Stop the Container
+```bash
+docker stop flasker
+```
+
+---
+
+## Part 2: Docker Compose with Redis Integration
+
+### Run Services
+⚠️ **Ensure previous containers are stopped to avoid port conflicts**.
+```bash
+docker compose up -d
+```
+
+### Test Endpoints
+1. Check the `/ping` endpoint:
+   ```bash
+   curl http://localhost:5000/ping
+   ```
+
+2. Check the `/count` endpoint (uses Redis to track visits):
+   ```bash
+   curl http://localhost:5000/count
+   ```
+
+### Teardown Services
+```bash
+docker compose down
+```
+
